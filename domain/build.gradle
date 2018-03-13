@@ -1,0 +1,84 @@
+apply plugin: 'com.android.library'
+apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'me.tatarka.retrolambda'
+apply plugin: 'org.greenrobot.greendao'
+
+buildscript {
+    repositories {
+        jcenter()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'me.tatarka:gradle-retrolambda:3.3.0'
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+    }
+}
+
+android {
+    def globalConfig = rootProject.extensions.getByName("ext")
+
+    sourceSets {
+        main {
+            jniLibs.srcDir '../libs'
+        }
+    }
+
+    compileSdkVersion globalConfig.getAt("compileSdkVersion")
+    buildToolsVersion globalConfig.getAt("buildToolsVersion")
+
+    defaultConfig {
+        minSdkVersion globalConfig.getAt("minSdkVersion")
+        targetSdkVersion globalConfig.getAt("targetSdkVersion")
+
+        testInstrumentationRunner globalConfig.getAt("testInstrumentationRunner")
+        testApplicationId globalConfig.getAt("testApplicationId")
+    }
+
+    android.dexOptions {
+        javaMaxHeapSize "2g"
+        preDexLibraries = true
+        jumboMode = true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    compile project(':data')
+
+    def moduleDependencies = rootProject.ext.projectDependencies
+
+    //support
+    compile moduleDependencies.appcompact
+    compile moduleDependencies.recyclerView
+    provided moduleDependencies.javaxAnnotation
+    compile moduleDependencies.multidex
+
+    //network
+    compile moduleDependencies.okHttp3
+    compile moduleDependencies.interceptor
+    compile moduleDependencies.retrofit2
+    compile moduleDependencies.converter_gson
+    compile moduleDependencies.retrofit2_rxjava2_adapter
+
+    //view
+    compile moduleDependencies.bootstrap
+    compile moduleDependencies.butterknife
+    apt moduleDependencies.butterknife_compiler
+
+    //rx
+    compile moduleDependencies.rxjava2
+    compile moduleDependencies.rxandroid2
+    compile moduleDependencies.rxpermissions2
+
+    //tools
+    provided moduleDependencies.dagger
+    apt moduleDependencies.daggerCompiler
+    compile moduleDependencies.androidEventbus
+    compile moduleDependencies.crashreport
+    compile moduleDependencies.nativecrashreport
+    compile moduleDependencies.greendao
+}

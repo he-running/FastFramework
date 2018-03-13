@@ -1,0 +1,33 @@
+apply from: 'buildsystem/dependencies.gradle'
+
+//gradle脚本执行所需依赖
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:2.3.3'
+
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+        classpath 'me.tatarka:gradle-retrolambda:3.3.0'
+        classpath 'org.greenrobot:greendao-gradle-plugin:3.2.2'
+    }
+}
+
+//整个工程需要的依赖
+allprojects {
+    repositories {
+        jcenter()
+        mavenCentral()
+
+        flatDir {
+            dirs '../libs'
+        }
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+

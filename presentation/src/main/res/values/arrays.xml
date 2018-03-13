@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--分别从9个危险权限组抽一条授权，其他的则默认一起授权-->
+    <!--用于6.0以上系统，需要在manifest文件中同时声明相关权限-->
+    <string-array name="permission_group">
+        <item>android.permission.READ_CALENDAR</item>
+        <item>android.permission.CAMERA</item>
+        <item>android.permission.READ_CONTACTS</item>
+        <item>android.permission.ACCESS_FINE_LOCATION</item>
+        <item>android.permission.RECORD_AUDIO</item>
+        <item>android.permission.READ_PHONE_STATE</item>
+        <item>android.permission.BODY_SENSORS</item>
+        <item>android.permission.SEND_SMS</item>
+        <item>android.permission.WRITE_EXTERNAL_STORAGE</item>
+    </string-array>
+
+
+
+
+</resources>

@@ -1,0 +1,99 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'me.tatarka.retrolambda'
+apply plugin: 'org.greenrobot.greendao'
+
+//gradle脚本执行所需依赖
+buildscript {
+    repositories {
+        jcenter()
+    }
+}
+
+//项目需要的依赖
+repositories {
+        jcenter()
+        mavenCentral()
+}
+
+android {
+    def globalConfig = rootProject.extensions.getByName("ext")
+
+    sourceSets {
+        main {
+            jniLibs.srcDir '../libs'
+            assets.srcDirs = ['src/main/assets', 'src/main/assets/']
+        }
+    }
+
+    compileSdkVersion globalConfig.getAt("compileSdkVersion")
+    buildToolsVersion globalConfig.getAt("buildToolsVersion")
+    
+    defaultConfig {
+        minSdkVersion globalConfig.getAt("minSdkVersion")
+        targetSdkVersion globalConfig.getAt("targetSdkVersion")
+
+        applicationId globalConfig.getAt("applicationId")
+        versionCode globalConfig.getAt("versionCode")
+        versionName globalConfig.getAt("versionName")
+
+        multiDexEnabled globalConfig.getAt("multiDexEnabled")
+        testInstrumentationRunner globalConfig.getAt("testInstrumentationRunner")
+        testApplicationId globalConfig.getAt("testApplicationId")
+    }
+
+    android.dexOptions {
+        javaMaxHeapSize "2g"
+        preDexLibraries = true
+        jumboMode = true
+    }
+
+    applicationVariants.all {
+        variant ->
+            variant.outputs.each { output ->
+                output.outputFile = new File(
+                        output.outputFile.parent,
+                        "rapid-v${variant.versionName}-build${variant.versionCode}" +
+                                "-${variant.buildType.name}.apk"
+                )
+            }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    compile project(':domain')
+    compile project(':data')
+
+    def moduleDependencies = rootProject.ext.projectDependencies
+
+    //support
+    compile moduleDependencies.appcompact
+    compile moduleDependencies.recyclerView
+    provided moduleDependencies.javaxAnnotation
+    compile moduleDependencies.multidex
+
+    //network
+
+    //view
+    compile moduleDependencies.bootstrap
+    compile moduleDependencies.butterknife
+    apt moduleDependencies.butterknife_compiler
+
+    //rx
+    compile moduleDependencies.rxjava2
+    compile moduleDependencies.rxandroid2
+    compile moduleDependencies.rxpermissions2
+
+    //tools
+    compile moduleDependencies.dagger
+    apt moduleDependencies.daggerCompiler
+    compile moduleDependencies.androidEventbus
+    compile moduleDependencies.crashreport
+    compile moduleDependencies.nativecrashreport
+    compile moduleDependencies.greendao
+}
