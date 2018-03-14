@@ -6,14 +6,15 @@ apply plugin: 'org.greenrobot.greendao'
 //gradle脚本执行所需依赖
 buildscript {
     repositories {
+//        google()
         jcenter()
     }
 }
 
 //项目需要的依赖
 repositories {
-        jcenter()
-        mavenCentral()
+//    google()
+    jcenter()
 }
 
 android {
@@ -28,12 +29,13 @@ android {
 
     compileSdkVersion globalConfig.getAt("compileSdkVersion")
     buildToolsVersion globalConfig.getAt("buildToolsVersion")
-    
+
     defaultConfig {
+        applicationId globalConfig.getAt("applicationId")
+
         minSdkVersion globalConfig.getAt("minSdkVersion")
         targetSdkVersion globalConfig.getAt("targetSdkVersion")
 
-        applicationId globalConfig.getAt("applicationId")
         versionCode globalConfig.getAt("versionCode")
         versionName globalConfig.getAt("versionName")
 
@@ -53,7 +55,7 @@ android {
             variant.outputs.each { output ->
                 output.outputFile = new File(
                         output.outputFile.parent,
-                        "rapid-v${variant.versionName}-build${variant.versionCode}" +
+                        "fast-v${variant.versionName}-build${variant.versionCode}" +
                                 "-${variant.buildType.name}.apk"
                 )
             }
@@ -62,6 +64,13 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled globalConfig.getAt("minifyEnabled")
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
     }
 }
 
@@ -96,4 +105,16 @@ dependencies {
     compile moduleDependencies.crashreport
     compile moduleDependencies.nativecrashreport
     compile moduleDependencies.greendao
+
+    //test
+    def testDependencies = rootProject.ext.testDependencies
+//    testImplementation 'junit:junit:4.12'
+//    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+//    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+
+    androidTestCompile(testDependencies.espresso, {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    testCompile testDependencies.junit
+
 }

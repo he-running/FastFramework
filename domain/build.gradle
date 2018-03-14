@@ -5,8 +5,8 @@ apply plugin: 'org.greenrobot.greendao'
 
 buildscript {
     repositories {
+//        google()
         jcenter()
-        mavenCentral()
     }
     dependencies {
         classpath 'me.tatarka:gradle-retrolambda:3.3.0'
@@ -43,6 +43,13 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled globalConfig.getAt("minifyEnabled")
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
     }
 }
 
@@ -81,4 +88,15 @@ dependencies {
     compile moduleDependencies.crashreport
     compile moduleDependencies.nativecrashreport
     compile moduleDependencies.greendao
+
+    //test
+    def testDependencies = rootProject.ext.testDependencies
+//    testImplementation 'junit:junit:4.12'
+//    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+//    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+
+    androidTestCompile(testDependencies.espresso, {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    testCompile testDependencies.junit
 }

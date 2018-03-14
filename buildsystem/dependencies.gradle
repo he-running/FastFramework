@@ -9,12 +9,14 @@ ext {
     //App
     debuggable = true //开启调试，正式包需要改为false，测试改为true
     minifyEnabled = false // 开启混淆，正式包需要改为true
-    applicationId = 'com.he.rapidframework'
+    applicationId = 'com.he.fastframework'
     versionCode = 2018020501//线上最新版
     versionName = "0.0.1"
 
     //---Libraries-version---//
     //support
+    supportV4Version='26.1.0'
+    constraintLayoutVersion='1.0.2'
     appcompactVersion = '26.+'
     recyclerViewVersion = '26.+'
     javaxAnnotationVersion = '1.0'
@@ -47,16 +49,21 @@ ext {
 
     //Testing
     jUnitVersion = '4.12'
-    robolectricVersion = '3.0'
-    assertJVersion = '1.7.1'
-    mockitoVersion = '1.9.5'
-    dexmakerVersion = '1.0'
     espressoVersion = '2.0'
-    testingSupportLibVersion = '0.1'
+    testRunnerVersion='1.0.1'
     testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
-    testApplicationId = 'com.he.rapidframework.test'
+    testApplicationId = 'com.he.fastframework.test'
+
+//    robolectricVersion = '3.0'
+//    assertJVersion = '1.7.1'
+//    mockitoVersion = '1.9.5'
+//    dexmakerVersion = '1.0'
+//    testingSupportLibVersion = '0.1'
+
     projectDependencies = [
             //support
+            supportV4        : "com.android.support:support-v4:${supportV4Version}",
+            constraintLayout : "com.android.support.constraint:constraint-layout:${constraintLayoutVersion}",
             appcompact       : "com.android.support:appcompat-v7:${appcompactVersion}",
             recyclerView     : "com.android.support:recyclerview-v7:${recyclerViewVersion}",
             javaxAnnotation  : "javax.annotation:jsr250-api:${javaxAnnotationVersion}",
@@ -70,10 +77,6 @@ ext {
             retrofit2        : "com.squareup.retrofit2:retrofit:${retrofit2Version}",
             converter_gson   : "com.squareup.retrofit2:converter-gson:${retrofit2Version}",
             retrofit2_rxjava2_adapter : "com.jakewharton.retrofit:retrofit2-rxjava2-adapter:${rrAdapterVersion}",
-//            compile 'com.squareup.okhttp3:logging-interceptor:3.6.0'
-//            compile 'com.squareup.retrofit2:retrofit:2.2.0'
-//            compile 'com.squareup.retrofit2:converter-gson:2.2.0'
-//            compile 'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0'
 
 
             //view
@@ -98,11 +101,14 @@ ext {
     ]
 
     testDependencies = [
-            junit: "junit:junit:${jUnitVersion}",
-            mockito          : "org.mockito:mockito-core:${mockitoVersion}",
-            dexmaker         : "com.google.dexmaker:dexmaker:${dexmakerVersion}",
-            dexmakerMockito  : "com.google.dexmaker:dexmaker-mockito:${dexmakerVersion}",
+            junit            : "junit:junit:${jUnitVersion}",
             espresso         : "com.android.support.test.espresso:espresso-core:${espressoVersion}",
-            testingSupportLib: "com.android.support.test:testing-support-lib:${testingSupportLibVersion}",
+            testRunner       : "com.android.support.test:runner:${testRunnerVersion}",
+
+//            mockito          : "org.mockito:mockito-core:${mockitoVersion}",
+//            dexmaker         : "com.google.dexmaker:dexmaker:${dexmakerVersion}",
+//            dexmakerMockito  : "com.google.dexmaker:dexmaker-mockito:${dexmakerVersion}",
+//            testingSupportLib: "com.android.support.test:testing-support-lib:${testingSupportLibVersion}",
     ]
+
 }
