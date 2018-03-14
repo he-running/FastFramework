@@ -1,6 +1,6 @@
 apply plugin: 'com.android.library'
 //apply plugin: 'com.neenbedankt.android-apt'
-apply plugin: 'me.tatarka.retrolambda'
+//apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'org.greenrobot.greendao'
 
 buildscript {
@@ -24,7 +24,7 @@ android {
     }
 
     compileSdkVersion globalConfig.getAt("compileSdkVersion")
-//    buildToolsVersion globalConfig.getAt("buildToolsVersion")
+    buildToolsVersion globalConfig.getAt("buildToolsVersion")
 
     defaultConfig {
         minSdkVersion globalConfig.getAt("minSdkVersion")

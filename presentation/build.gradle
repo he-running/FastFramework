@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
 //apply plugin: 'com.neenbedankt.android-apt'
-apply plugin: 'me.tatarka.retrolambda'
+//apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'org.greenrobot.greendao'
 
 //gradle脚本执行所需依赖
@@ -28,7 +28,7 @@ android {
     }
 
     compileSdkVersion globalConfig.getAt("compileSdkVersion")
-//    buildToolsVersion globalConfig.getAt("buildToolsVersion")
+    buildToolsVersion globalConfig.getAt("buildToolsVersion")
 
     defaultConfig {
         applicationId globalConfig.getAt("applicationId")
