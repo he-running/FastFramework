@@ -1,19 +1,19 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.neenbedankt.android-apt'
+//apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'org.greenrobot.greendao'
 
 //gradle脚本执行所需依赖
 buildscript {
     repositories {
-//        google()
+        google()
         jcenter()
     }
 }
 
 //项目需要的依赖
 repositories {
-//    google()
+    google()
     jcenter()
 }
 
@@ -28,7 +28,7 @@ android {
     }
 
     compileSdkVersion globalConfig.getAt("compileSdkVersion")
-    buildToolsVersion globalConfig.getAt("buildToolsVersion")
+//    buildToolsVersion globalConfig.getAt("buildToolsVersion")
 
     defaultConfig {
         applicationId globalConfig.getAt("applicationId")
@@ -42,6 +42,8 @@ android {
         multiDexEnabled globalConfig.getAt("multiDexEnabled")
         testInstrumentationRunner globalConfig.getAt("testInstrumentationRunner")
         testApplicationId globalConfig.getAt("testApplicationId")
+
+        flavorDimensions "default"//这个名字貌似随便取，3.0.1必须添加的属性
     }
 
     android.dexOptions {
@@ -51,13 +53,22 @@ android {
     }
 
     applicationVariants.all {
+//        variant ->
+//            variant.outputs.each { output ->
+//                output.outputFile = new File(
+//                        output.outputFile.parent,
+//                        "fast-v${variant.versionName}-build${variant.versionCode}" +
+//                                "-${variant.buildType.name}.apk"
+//                )
+//            }
+
+        //3.0.1新的声明方法
         variant ->
-            variant.outputs.each { output ->
-                output.outputFile = new File(
-                        output.outputFile.parent,
+            variant.outputs.all{output ->
+                //定义apk名字
+                outputFileName =
                         "fast-v${variant.versionName}-build${variant.versionCode}" +
                                 "-${variant.buildType.name}.apk"
-                )
             }
     }
 
@@ -91,7 +102,7 @@ dependencies {
     //view
     compile moduleDependencies.bootstrap
     compile moduleDependencies.butterknife
-    apt moduleDependencies.butterknife_compiler
+    annotationProcessor  moduleDependencies.butterknife_compiler
 
     //rx
     compile moduleDependencies.rxjava2
@@ -100,7 +111,7 @@ dependencies {
 
     //tools
     compile moduleDependencies.dagger
-    apt moduleDependencies.daggerCompiler
+    annotationProcessor  moduleDependencies.daggerCompiler
     compile moduleDependencies.androidEventbus
     compile moduleDependencies.crashreport
     compile moduleDependencies.nativecrashreport
@@ -108,13 +119,8 @@ dependencies {
 
     //test
     def testDependencies = rootProject.ext.testDependencies
-//    testImplementation 'junit:junit:4.12'
-//    androidTestImplementation 'com.android.support.test:runner:1.0.1'
-//    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 
-    androidTestCompile(testDependencies.espresso, {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    testCompile testDependencies.junit
-
+    testImplementation testDependencies.junit
+    androidTestImplementation testDependencies.testRunner
+    androidTestImplementation testDependencies.espresso
 }

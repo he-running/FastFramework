@@ -1,11 +1,11 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.neenbedankt.android-apt'
+//apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'org.greenrobot.greendao'
 
 buildscript {
     repositories {
-//        google()
+        google()
         jcenter()
     }
     dependencies {
@@ -24,7 +24,7 @@ android {
     }
 
     compileSdkVersion globalConfig.getAt("compileSdkVersion")
-    buildToolsVersion globalConfig.getAt("buildToolsVersion")
+//    buildToolsVersion globalConfig.getAt("buildToolsVersion")
 
     defaultConfig {
         minSdkVersion globalConfig.getAt("minSdkVersion")
@@ -67,7 +67,7 @@ dependencies {
     //view
     compile moduleDependencies.bootstrap
     compile moduleDependencies.butterknife
-    apt moduleDependencies.butterknife_compiler
+    annotationProcessor  moduleDependencies.butterknife_compiler
 
     //rx
     compile moduleDependencies.rxjava2
@@ -76,7 +76,7 @@ dependencies {
 
     //tools
     provided moduleDependencies.dagger
-    apt moduleDependencies.daggerCompiler
+    annotationProcessor  moduleDependencies.daggerCompiler
     compile moduleDependencies.androidEventbus
     compile moduleDependencies.crashreport
     compile moduleDependencies.nativecrashreport
@@ -84,14 +84,10 @@ dependencies {
 
     //test
     def testDependencies = rootProject.ext.testDependencies
-//    testImplementation 'junit:junit:4.12'
-//    androidTestImplementation 'com.android.support.test:runner:1.0.1'
-//    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 
-    androidTestCompile(testDependencies.espresso, {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    testCompile testDependencies.junit
+    testImplementation testDependencies.junit
+    androidTestImplementation testDependencies.testRunner
+    androidTestImplementation testDependencies.espresso
 }
 
 greendao {

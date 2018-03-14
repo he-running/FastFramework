@@ -3,12 +3,12 @@ apply from: 'buildsystem/dependencies.gradle'
 //gradle脚本执行所需依赖
 buildscript {
     repositories {
-//        google()
+        google()
         jcenter()
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.3'
+        classpath 'com.android.tools.build:gradle:3.0.1'
 
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
         classpath 'me.tatarka:gradle-retrolambda:3.3.0'
@@ -19,7 +19,7 @@ buildscript {
 //整个工程需要的依赖
 allprojects {
     repositories {
-//        google()
+        google()
         jcenter()
 
         flatDir {
