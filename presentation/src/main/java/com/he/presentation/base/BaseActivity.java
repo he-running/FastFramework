@@ -47,10 +47,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(getLayout());
 
-        getApplicationComponent().inject(this);
-
         TAG = getClass().getSimpleName();
-
         //butterknife控件注入
         unbinder= ButterKnife.bind(this);
 
@@ -90,10 +87,9 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected abstract void initActivity();
 
     /**
-     * Adds a {@link Fragment} to this com.smart.loaction.baidumap.activity's layout.
      *
-     * @param containerViewId The container view to where add the fragment.
-     * @param fragment        The fragment to be added.
+     * @param containerViewId
+     * @param fragment
      */
     protected void addFragment(int containerViewId, Fragment fragment) {
         FragmentTransaction fragmentTransaction = this.getFragmentManager().beginTransaction();

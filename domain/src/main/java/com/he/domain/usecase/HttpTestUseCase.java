@@ -13,8 +13,6 @@ import com.he.domain.usecase.base.UseCase;
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 
 /**
  * 测试样例
@@ -36,19 +34,28 @@ public class HttpTestUseCase extends UseCase<String>{
                 RetrofitFactory.getInstance().getApiService()
                         .getCall2()
                         .onErrorResumeNext(new RetrofitFactory.HttpResponseFunc<BaseEntity<TranslateEntity>>())
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
+                        .flatMap(translateEntityBaseEntity -> {
+                            Log.i("thread", "buildUseCaseObservable: "+Thread.currentThread().getName());
+                            return Observable.just(translateEntityBaseEntity);
+                        })
+//                        .subscribeOn(Schedulers.io())
+//                        .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new BaseObserver<BaseEntity<TranslateEntity>>() {
                             @Override
                             protected void onSuccess(BaseEntity<TranslateEntity> entity) {
                                 Log.i("成功", "onSuccess: "+entity.toString());
                                 emitter.onNext(entity.toString());
+
+                                Log.i("thread", "onSuccess: "+Thread.currentThread().getName());
                             }
 
                             @Override
                             protected void onFailure(Throwable e) {
                                 Log.i("失败", "onFailure: "+e.toString());
                                 emitter.onError(e);
+
+                                Log.i("thread", "onFailure: "+Thread.currentThread().getName());
+
                             }
                         });
             }catch (Exception ex){

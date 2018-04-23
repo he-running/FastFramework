@@ -120,12 +120,10 @@ public abstract class UseCase<T> {
                         running = false;
                         isAsyncTaskMode = false;
                         onError.accept(throwable);
-//                        disposable.dispose();
                     },() -> {
                         running = false;
                         isAsyncTaskMode = false;
                         onCompleted.run();
-//                        disposable.dispose();
                     });
         } catch (Exception e) {
             e.printStackTrace();

@@ -16,8 +16,6 @@
 package com.he.presentation.di.component;
 
 
-import com.he.presentation.base.BaseActivity;
-import com.he.presentation.base.BaseFragmentActivity;
 import com.he.presentation.di.modules.ActivityModule;
 import com.he.presentation.di.modules.ApplicationModule;
 
@@ -34,7 +32,4 @@ public interface ApplicationComponent {
 
     //添加activity模块依赖组件
     ActivityComponent plus(ActivityModule activityModule);
-
-    void inject(BaseActivity baseActivity);
-    void inject(BaseFragmentActivity baseFragmentActivity);
 }

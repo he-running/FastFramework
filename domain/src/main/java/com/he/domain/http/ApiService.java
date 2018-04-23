@@ -25,4 +25,8 @@ public interface ApiService {
      */
     @GET("ajax.php?a=fy&f=auto&t=auto&w=hello%20world")
     Observable<BaseEntity<TranslateEntity>> getCall2();
+
+    //retrofit可传输javabean
+//    @POST("...")
+//    Observable<...>  test(@Body Entity entity);
 }

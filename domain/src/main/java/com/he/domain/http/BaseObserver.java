@@ -24,8 +24,6 @@ public abstract class BaseObserver<T> implements Observer<T> {
     public void onNext(@NonNull T t) {
 //        closeProgress();
         onSuccess(t);
-
-        disposable.dispose();
     }
 
     @Override
@@ -37,7 +35,7 @@ public abstract class BaseObserver<T> implements Observer<T> {
 
     @Override
     public void onComplete() {
-
+        disposable.dispose();
     }
 
     /**

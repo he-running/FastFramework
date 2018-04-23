@@ -46,7 +46,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(getLayout());
 
-        this.getApplicationComponent().inject(this);
+//        this.getApplicationComponent().inject(this);
 
         TAG = getClass().getSimpleName();
 
